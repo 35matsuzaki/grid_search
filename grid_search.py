@@ -15,8 +15,8 @@ fnav_file_name = "fnav_params_ballbot.yaml"
 local_file_name = "local_costmap_params_ballbot.yaml"
 
 argvs = sys.argv
-if len(argvs) != 2:
-    print "usage python %s <output_dir> " % argvs[0]
+if len(argvs) != 3:
+    print "usage python %s <output_dir> <ballbot_env/world/case>" % argvs[0]
     exit()
 
 #バッグアップ、結果をまとめるディレクトリを作成
@@ -27,8 +27,8 @@ os.mkdir(argvs[1])
 
 #main ループ
 #csvの各列に記載してあるパラメータごとに処理
-for i in range(0,80):
-    #パラメータごとにバックアップ、結果をまとめるディレクトリ作成
+for i in range(80,128):
+    #パラメータごとにパラメータファイルのバックアップと、結果をまとめるディレクトリ作成
     output_dir = argvs[1]+"/"+str(i)
     os.mkdir(output_dir)
 
@@ -41,26 +41,33 @@ for i in range(0,80):
     #ballbot_envにあるyamlを削除する
     os.remove(ballbot_env_path+fnav_file_name)
     os.remove(ballbot_env_path+local_file_name)
-    #ballbot_envとバックアップディレクトリに作成したyamlファイルをコピーする
+    #ballbot_envに作成したyamlファイルをコピーする
     shutil.copy2(fnav_file_name, ballbot_env_path)
-    shutil.copy2(fnav_file_name, output_dir)
     shutil.copy2(local_file_name, ballbot_env_path)
-    shutil.copy2(local_file_name, output_dir)
 
     #ros環境作る
     source_cmd = "source " + ros_ws_path + "devel/setup.bash"
     os.system(source_cmd)
 
     #worldごとに./run_para.shを実行
-    result_csv =output_dir + "/result.csv"
-    world_name = "/case/case0010.world"
-    run_cmd = ros_ws_path + "run_para.sh -pause " + result_csv + " " + world_name
-    os.system(run_cmd)
+    for world_file in os.listdir(argvs[2]):
+        #結果をまとめるディレクトリ作成
+        output_result_dir = output_dir+"/"+world_file
+        print output_result_dir
+        os.mkdir(output_result_dir)
+        #バックアップディレクトリに作成したyamlファイルをコピーする
+        shutil.copy2(fnav_file_name, output_result_dir)
+        shutil.copy2(local_file_name, output_result_dir)
 
-    #良きタイミング待つ
-    time.sleep(22)
+        result_csv =output_result_dir + "/result.csv"
+        world_name = "/case/" + world_file #FIXME
+        run_cmd = ros_ws_path + "run_para.sh -pause " + result_csv + " " + world_name
+        os.system(run_cmd)
 
-    #終了する
-    kill_cmd = ros_ws_path + "kill_run.sh"
-    os.system(kill_cmd)
-    time.sleep(3)
+        #良きタイミング待つ
+        time.sleep(22)
+
+        #終了する
+        kill_cmd = ros_ws_path + "kill_run.sh"
+        os.system(kill_cmd)
+        time.sleep(3)

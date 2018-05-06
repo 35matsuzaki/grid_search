@@ -7,8 +7,8 @@ import shutil
 import time
 
 argvs = sys.argv
-if len(argvs) != 2:
-    print "usage python %s <target dir>" % argvs[0]
+if len(argvs) != 3:
+    print "usage python %s <target dir> <result.csv>" % argvs[0]
     exit()
 
 def readCsv(filename):
@@ -29,12 +29,12 @@ if __name__ == "__main__":
     #結果保存用辞書{"パラメータ番号":world毎の最小値}
     result = {}
     #.worldのディレクトリごとに
-    for world_dir in os.listdir(argvs[1]):
+    for param_key in os.listdir(argvs[1]):
         #パラメータの結果ごとに
-        world_path = argvs[1] + "/" + world_dir
-        for param_key in os.listdir(world_path):
-            param_path = world_path + "/" + param_key
-            file_path = param_path + "/" + "result.csv"
+        param_path = argvs[1] + "/" + param_key
+        for world_dir in os.listdir(param_path):
+            world_path = param_path + "/" + world_dir
+            file_path = world_path + "/" + "result.csv"
             data = readCsv(file_path)
 
             #評価値として人に最も近づいた時の距離を使う
@@ -54,4 +54,4 @@ if __name__ == "__main__":
     #降順で並び替える
     sorted_result = sorted(result.items(), key=lambda x: -x[1])
     #結果をファイル出力
-    save_result("test.csv", sorted_result)
+    save_result(argvs[2], sorted_result)

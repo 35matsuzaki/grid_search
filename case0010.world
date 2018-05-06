@@ -1,0 +1,316 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <world name="default">
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <model name="ground_plane">
+      <static>1</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>10000 10000</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1e6</mu>
+                <mu2>1e6</mu2>
+              </ode>
+            </friction>
+            <contact>
+               <ode soft_cfm="0" soft_erp="0.2" kp="1e10" kd="1" max_vel="100.0" min_depth="0.0001"/>
+            </contact>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name="visual">
+          <cast_shadows>0</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+          </material>
+        </visual>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+    </model>
+
+    <physics type="ode">
+      <gravity>0 0 -9.81</gravity>
+      <ode>
+        <solver>
+          <!-- <use_dynamic_moi_rescaling>true</use_dynamic_moi_rescaling>
+          <type>quick</type>
+          <type>world</type> -->
+          <iters>200</iters>
+          <sor>1.5</sor>
+        </solver>
+        <constraints>
+          <cfm>0.0</cfm>
+          <erp>0.2</erp>
+          <max_velocity>10000.0</max_velocity>
+          <contact_surface_layer>0.0001</contact_surface_layer>
+        </constraints>
+      </ode>
+
+      <real_time_update_rate>1000</real_time_update_rate>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.000000</real_time_factor>
+    </physics>
+
+<!--actor0-->
+    <actor name="actor0">
+      <skin>
+        <filename>moonwalk.dae</filename>
+      </skin>
+      <animation name="walking">
+        <filename>walk.dae</filename>
+        <interpolate_x>true</interpolate_x>
+      </animation>
+      <script>
+        <trajectory id="0" type="walking">
+          <waypoint>
+            <time>0</time>
+            <pose>22.0 0.0 0 0 0 3.1416</pose>
+          </waypoint>
+          <waypoint>
+            <time>22.0</time>
+            <pose>0.0 0.0 0 0 0 3.1416</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+
+      <link name="link">
+
+	<inertial>
+	  <pose>0 0 0.95 0 0 0</pose>
+	  <mass>80.0</mass>
+	  <inertia>
+	    <ixx>27.82</ixx>
+	    <ixy>0</ixy>
+	    <ixz>0</ixz>
+	    <iyy>24.88</iyy>
+	    <iyz>0</iyz>
+	    <izz>4.57</izz>
+	  </inertia>
+	</inertial>
+
+	<collision name="bottom">
+	  <pose>0 0 8 0 0 0</pose>
+	  <geometry>
+	    <box>
+              <size>0.35 0.75 0.02</size>
+	    </box>
+	  </geometry>
+	</collision>
+      </link>
+    </actor>
+    <actor name="actor1">
+      <skin>
+        <filename>moonwalk.dae</filename>
+      </skin>
+      <animation name="walking">
+        <filename>walk.dae</filename>
+        <interpolate_x>true</interpolate_x>
+      </animation>
+      <script>
+        <trajectory id="0" type="walking">
+          <waypoint>
+            <time>0</time>
+            <pose>15.0 1.0 0 0 0 3.1416</pose>
+          </waypoint>
+          <waypoint>
+            <time>15.0</time>
+            <pose>0.0 1.0 0 0 0 3.1416</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+    <actor name="actor2">
+      <skin>
+        <filename>moonwalk.dae</filename>
+      </skin>
+      <animation name="walking">
+        <filename>walk.dae</filename>
+        <interpolate_x>true</interpolate_x>
+      </animation>
+      <script>
+        <trajectory id="0" type="walking">
+          <waypoint>
+            <time>0</time>
+            <pose>13.0 2.0 0 0 0 3.1416</pose>
+          </waypoint>
+          <waypoint>
+            <time>13.0</time>
+            <pose>0.0 2.0 0 0 0 3.1416</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+  </actor>
+  <actor name="actor3">
+    <skin>
+      <filename>moonwalk.dae</filename>
+    </skin>
+    <animation name="walking">
+      <filename>walk.dae</filename>
+      <interpolate_x>true</interpolate_x>
+    </animation>
+    <script>
+      <trajectory id="0" type="walking">
+        <waypoint>
+          <time>0</time>
+          <pose>22.0 3.0 0 0 0 3.1416</pose>
+        </waypoint>
+        <waypoint>
+          <time>22.0</time>
+          <pose>0.0 3.0 0 0 0 3.1416</pose>
+        </waypoint>
+      </trajectory>
+    </script>
+  </actor>
+  <actor name="actor4">
+    <skin>
+      <filename>moonwalk.dae</filename>
+    </skin>
+    <animation name="walking">
+      <filename>walk.dae</filename>
+      <interpolate_x>true</interpolate_x>
+    </animation>
+    <script>
+      <trajectory id="0" type="walking">
+        <waypoint>
+          <time>0</time>
+          <pose>22.0 4.0 0 0 0 3.1416</pose>
+        </waypoint>
+        <waypoint>
+          <time>22.0</time>
+          <pose>0.0 4.0 0 0 0 3.1416</pose>
+        </waypoint>
+      </trajectory>
+    </script>
+  </actor>
+  <actor name="actor5">
+    <skin>
+      <filename>moonwalk.dae</filename>
+    </skin>
+    <animation name="walking">
+      <filename>walk.dae</filename>
+      <interpolate_x>true</interpolate_x>
+    </animation>
+    <script>
+      <trajectory id="0" type="walking">
+        <waypoint>
+          <time>0</time>
+          <pose>14.0 -1.0 0 0 0 3.1416</pose>
+        </waypoint>
+        <waypoint>
+          <time>14.0</time>
+          <pose>0.0 -1.0 0 0 0 3.1416</pose>
+        </waypoint>
+      </trajectory>
+    </script>
+  </actor>
+  <actor name="actor6">
+    <skin>
+      <filename>moonwalk.dae</filename>
+    </skin>
+    <animation name="walking">
+      <filename>walk.dae</filename>
+      <interpolate_x>true</interpolate_x>
+    </animation>
+    <script>
+      <trajectory id="0" type="walking">
+        <waypoint>
+          <time>0</time>
+          <pose>22.0 -2.0 0 0 0 3.1416</pose>
+        </waypoint>
+        <waypoint>
+          <time>22.0</time>
+          <pose>0.0 -2.0 0 0 0 3.1416</pose>
+        </waypoint>
+      </trajectory>
+    </script>
+  </actor>
+  <actor name="actor7">
+    <skin>
+      <filename>moonwalk.dae</filename>
+    </skin>
+    <animation name="walking">
+      <filename>walk.dae</filename>
+      <interpolate_x>true</interpolate_x>
+    </animation>
+    <script>
+      <trajectory id="0" type="walking">
+        <waypoint>
+          <time>0</time>
+          <pose>15.0 -3.0 0 0 0 3.1416</pose>
+        </waypoint>
+        <waypoint>
+          <time>15.0</time>
+          <pose>0.0 -3.0 0 0 0 3.1416</pose>
+        </waypoint>
+      </trajectory>
+    </script>
+  </actor>
+  <actor name="actor8">
+    <skin>
+      <filename>moonwalk.dae</filename>
+    </skin>
+    <animation name="walking">
+      <filename>walk.dae</filename>
+      <interpolate_x>true</interpolate_x>
+    </animation>
+    <script>
+      <trajectory id="0" type="walking">
+        <waypoint>
+          <time>0</time>
+          <pose>14.0 -4.0 0 0 0 3.1416</pose>
+        </waypoint>
+        <waypoint>
+          <time>14.0</time>
+          <pose>0.0 -4.0 0 0 0 3.1416</pose>
+        </waypoint>
+      </trajectory>
+    </script>
+  </actor>
+  <actor name="actor9">
+    <skin>
+      <filename>moonwalk.dae</filename>
+    </skin>
+    <animation name="walking">
+      <filename>walk.dae</filename>
+      <interpolate_x>true</interpolate_x>
+    </animation>
+    <script>
+      <trajectory id="0" type="walking">
+        <waypoint>
+          <time>0</time>
+          <pose>22.0 -5.0 0 0 0 3.1416</pose>
+        </waypoint>
+        <waypoint>
+          <time>22.0</time>
+          <pose>0.0 -5.0 0 0 0 3.1416</pose>
+        </waypoint>
+      </trajectory>
+    </script>
+  </actor>
+
+  </world>
+</sdf>
