@@ -27,7 +27,7 @@ os.mkdir(argvs[1])
 
 #main ループ
 #csvの各列に記載してあるパラメータごとに処理
-for i in range(3,19):
+for i in range(0,80):
     #パラメータごとにバックアップ、結果をまとめるディレクトリ作成
     output_dir = argvs[1]+"/"+str(i)
     os.mkdir(output_dir)
@@ -44,8 +44,8 @@ for i in range(3,19):
     #ballbot_envとバックアップディレクトリに作成したyamlファイルをコピーする
     shutil.copy2(fnav_file_name, ballbot_env_path)
     shutil.copy2(fnav_file_name, output_dir)
-    shutil.copy2(local_file_name, output_dir)
     shutil.copy2(local_file_name, ballbot_env_path)
+    shutil.copy2(local_file_name, output_dir)
 
     #ros環境作る
     source_cmd = "source " + ros_ws_path + "devel/setup.bash"
@@ -58,9 +58,9 @@ for i in range(3,19):
     os.system(run_cmd)
 
     #良きタイミング待つ
-    time.sleep(25)
+    time.sleep(22)
 
     #終了する
     kill_cmd = ros_ws_path + "kill_run.sh"
     os.system(kill_cmd)
-    time.sleep(5)
+    time.sleep(3)
